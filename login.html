@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartClinic — تسجيل الدخول</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #64748b;
+      --accent: #06b6d4;
+      --accent-light: #22d3ee;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --white: #ffffff;
+      --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+      --gradient-light: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      --gradient-dark: linear-gradient(135deg, #1e3a8a 0%, #0e7490 100%);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--gradient-light);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-header {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .login-header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-header i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .login-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-body {
+      padding: 2.5rem;
+    }
+
+    .user-type-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .user-type-btn {
+      background: var(--light);
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .user-type-btn:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    .user-type-btn.active {
+      background: var(--gradient-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .user-type-btn i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-label i {
+      margin-left: 0.5rem;
+      color: var(--primary);
+    }
+
+    .form-control, .form-select {
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      border: none;
+      padding: 0.75rem 1.8rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .alert {
+      border-radius: 0.75rem;
+      border: none;
+      padding: 1rem 1.5rem;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .login-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .login-footer a:hover {
+      color: var(--primary-dark);
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--secondary);
+      cursor: pointer;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+    }
+
+    .form-check-input {
+      margin-left: 0.5rem;
+    }
+
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .forgot-password:hover {
+      color: var(--primary-dark);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-header-content">
+          <i class="bi bi-heart-pulse"></i>
+          <h1>مرحباً بعودتك</h1>
+          <p>سجل الدخول إلى SmartClinic</p>
+        </div>
+      </div>
+
+      <div class="login-body">
+        <!-- اختيار نوع المستخدم -->
+        <div class="user-type-selector">
+          <div class="user-type-btn active" data-user-type="patient">
+            <i class="bi bi-person"></i>
+            <div>مريض</div>
+          </div>
+          <div class="user-type-btn" data-user-type="doctor">
+            <i class="bi bi-person-badge"></i>
+            <div>طبيب</div>
+          </div>
+        </div>
+
+        <!-- نموذج تسجيل الدخول -->
+        <form id="loginForm">
+          <!-- حقل البريد الإلكتروني للمريض -->
+          <div class="mb-3" id="patientEmailField">
+            <label class="form-label">
+              <i class="bi bi-envelope"></i>
+              البريد الإلكتروني
+            </label>
+            <input type="email" class="form-control" id="patientEmail" placeholder="example@email.com">
+          </div>
+
+          <!-- حقل اختيار الطبيب -->
+          <div class="mb-3 d-none" id="doctorSelectField">
+            <label class="form-label">
+              <i class="bi bi-person-badge"></i>
+              اسم الطبيب
+            </label>
+            <select class="form-select" id="doctorName">
+              <option value="">اختر اسم الطبيب...</option>
+              <!-- سيتم ملؤها ديناميكياً -->
+            </select>
+          </div>
+
+          <!-- حقل كلمة المرور -->
+          <div class="mb-3">
+            <label class="form-label">
+              <i class="bi bi-lock"></i>
+              كلمة المرور
+            </label>
+            <div class="password-container">
+              <input type="password" class="form-control" id="password" placeholder="أدخل كلمة المرور" required>
+              <button type="button" class="toggle-password" id="togglePassword">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- تذكرني ونسيت كلمة المرور -->
+          <div class="remember-forgot">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="rememberMe">
+              <label class="form-check-label" for="rememberMe">
+                تذكرني
+              </label>
+            </div>
+            <a href="forgot-password.html" class="forgot-password">نسيت كلمة المرور؟</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary mb-3" id="loginBtn">
+            <i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول
+          </button>
+
+          <div class="alert alert-danger d-none" id="errorAlert">
+            <i class="bi bi-exclamation-triangle"></i> 
+            <span id="errorMessage"></span>
+          </div>
+        </form>
+
+        <div class="login-footer">
+          <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a></p>
+          <p><a href="index.html"><i class="bi bi-house-door"></i> العودة للصفحة الرئيسية</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // قاعدة بيانات الأطباء
+    const doctorsDatabase = [
+      {
+        id: 1,
+        name: "د. أحمد محمود",
+        email: "ahmed.mahmoud@smartclinic.com",
+        password: "123456",
+        specialty: "باطنة",
+        branch: "القاهرة"
+      },
+      {
+        id: 2,
+        name: "د. ليلى عبد الرحمن",
+        email: "layla.abdelrahman@smartclinic.com",
+        password: "123456",
+        specialty: "باطنة",
+        branch: "القاهرة"
+      },
+      {
+        id: 3,
+        name: "د. سارة إبراهيم",
+        email: "sara.ibrahim@smartclinic.com",
+        password: "123456",
+        specialty: "أطفال",
+        branch: "القاهرة"
+      },
+      {
+        id: 4,
+        name: "د. خالد مصطفى",
+        email: "khaled.mostafa@smartclinic.com",
+        password: "123456",
+        specialty: "أطفال",
+        branch: "القاهرة"
+      },
+      {
+        id: 5,
+        name: "د. ريم عماد",
+        email: "reem.emad@smartclinic.com",
+        password: "123456",
+        specialty: "أسنان",
+        branch: "القاهرة"
+      },
+      {
+        id: 6,
+        name: "د. سامي يوسف",
+        email: "sami.youssef@smartclinic.com",
+        password: "123456",
+        specialty: "باطنة",
+        branch: "الإسكندرية"
+      },
+      {
+        id: 7,
+        name: "د. منى حسام",
+        email: "mona.hossam@smartclinic.com",
+        password: "123456",
+        specialty: "أطفال",
+        branch: "الإسكندرية"
+      },
+      {
+        id: 8,
+        name: "د. هشام فوزي",
+        email: "hesham.fawzy@smartclinic.com",
+        password: "123456",
+        specialty: "أسنان",
+        branch: "الإسكندرية"
+      },
+      {
+        id: 9,
+        name: "د. ياسر عبد الله",
+        email: "yasser.abdullah@smartclinic.com",
+        password: "123456",
+        specialty: "باطنة",
+        branch: "المنصورة"
+      },
+      {
+        id: 10,
+        name: "د. سمر إبراهيم",
+        email: "samar.ibrahim@smartclinic.com",
+        password: "123456",
+        specialty: "أطفال",
+        branch: "المنصورة"
+      },
+      {
+        id: 11,
+        name: "د. كريم حمدي",
+        email: "kareem.hamdy@smartclinic.com",
+        password: "123456",
+        specialty: "أسنان",
+        branch: "المنصورة"
+      }
+    ];
+
+    // قاعدة بيانات المرضى (سيتم تخزينها في localStorage)
+    let patientsDatabase = JSON.parse(localStorage.getItem('patientsDatabase')) || [
+      {
+        id: 1,
+        name: "محمد أحمد",
+        email: "patient@test.com",
+        password: "123456",
+        phone: "01234567890",
+        birthDate: "1990-01-01"
+      }
+    ];
+
+    // متغير لتحديد نوع المستخدم الحالي
+    let currentUserType = 'patient';
+
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      // ملء قائمة الأطباء
+      const doctorSelect = document.getElementById('doctorName');
+      doctorsDatabase.forEach(doctor => {
+        const option = document.createElement('option');
+        option.value = doctor.name;
+        option.textContent = `${doctor.name} - ${doctor.specialty} (${doctor.branch})`;
+        doctorSelect.appendChild(option);
+      });
+
+      // إضافة event listeners لأزرار نوع المستخدم
+      document.querySelectorAll('.user-type-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          // إزالة النشاط من جميع الأزرار
+          document.querySelectorAll('.user-type-btn').forEach(b => b.classList.remove('active'));
+          // إضافة النشاط للزر المختار
+          this.classList.add('active');
+          
+          // تحديث نوع المستخدم الحالي
+          currentUserType = this.getAttribute('data-user-type');
+          
+          // تحديث الحقول المعروضة
+          updateFormFields();
+        });
+      });
+
+      // إضافة event listener لعرض/إخفاء كلمة المرور
+      document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('bi-eye');
+          icon.classList.add('bi-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+      });
+
+      // التحقق من وجود بيانات تسجيل دخول محفوظة
+      const rememberMe = localStorage.getItem('rememberMe');
+      if (rememberMe === 'true') {
+        document.getElementById('rememberMe').checked = true;
+        const savedEmail = localStorage.getItem('savedEmail');
+        if (savedEmail) {
+          document.getElementById('patientEmail').value = savedEmail;
+        }
+      }
+
+      // تحديث الحقول أول مرة
+      updateFormFields();
+    });
+
+    // تحديث الحقول بناءً على نوع المستخدم
+    function updateFormFields() {
+      const patientEmailField = document.getElementById('patientEmailField');
+      const doctorSelectField = document.getElementById('doctorSelectField');
+
+      if (currentUserType === 'patient') {
+        patientEmailField.classList.remove('d-none');
+        doctorSelectField.classList.add('d-none');
+        document.getElementById('patientEmail').required = true;
+        document.getElementById('doctorName').required = false;
+      } else {
+        patientEmailField.classList.add('d-none');
+        doctorSelectField.classList.remove('d-none');
+        document.getElementById('patientEmail').required = false;
+        document.getElementById('doctorName').required = true;
+      }
+    }
+
+    // معالجة تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('patientEmail').value;
+      const doctorName = document.getElementById('doctorName').value;
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const loginBtn = document.getElementById('loginBtn');
+
+      // إخفاء رسالة الخطأ
+      errorAlert.classList.add('d-none');
+
+      // التحقق من الحقول
+      if (!password) {
+        showError('يرجى إدخال كلمة المرور');
+        return;
+      }
+
+      if (currentUserType === 'patient' && !email) {
+        showError('يرجى إدخال البريد الإلكتروني');
+        return;
+      }
+
+      if (currentUserType === 'doctor' && !doctorName) {
+        showError('يرجى اختيار اسم الطبيب');
+        return;
+      }
+
+      let user = null;
+
+      // البحث عن المستخدم بناءً على النوع
+      if (currentUserType === 'patient') {
+        user = patientsDatabase.find(patient => patient.email === email);
+      } else {
+        user = doctorsDatabase.find(doctor => doctor.name === doctorName);
+      }
+
+      if (!user) {
+        showError(currentUserType === 'patient' ? 'البريد الإلكتروني غير مسجل' : 'اسم الطبيب غير مسجل');
+        return;
+      }
+
+      // التحقق من كلمة المرور
+      if (password !== user.password) {
+        showError('كلمة المرور غير صحيحة');
+        return;
+      }
+
+      // حفظ بيانات تسجيل الدخول إذا طلب المستخدم ذلك
+      if (rememberMe && currentUserType === 'patient') {
+        localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('savedEmail', email);
+      } else {
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('savedEmail');
+      }
+
+      // محاكاة عملية تسجيل الدخول
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> جاري تسجيل الدخول...';
+
+      setTimeout(() => {
+        // حفظ بيانات المستخدم في localStorage
+        const userData = {
+          type: currentUserType,
+          ...user
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData));
+        
+        // توجيه إلى الصفحة المناسبة
+        if (currentUserType === 'patient') {
+          window.location.href = 'index.html';
+        } else {
+          window.location.href = 'doctor.html';
+        }
+      }, 1500);
+    });
+
+    // عرض رسالة الخطأ
+    function showError(message) {
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      errorMessage.textContent = message;
+      errorAlert.classList.remove('d-none');
+    }
+  </script>
+</body>
+</html>

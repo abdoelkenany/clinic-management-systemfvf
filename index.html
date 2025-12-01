@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartClinic — النظام الذكي لإدارة العيادات</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #64748b;
+      --accent: #06b6d4;
+      --accent-light: #22d3ee;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --white: #ffffff;
+      --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+      --gradient-light: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      --gradient-dark: linear-gradient(135deg, #1e3a8a 0%, #0e7490 100%);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      scroll-behavior: smooth;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      padding: 0.7rem 0;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.6rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text; /* Chrome, Edge, Safari */
+  background-clip: text;         /* المواصفة القياسية */
+  -webkit-text-fill-color: transparent;
+  color: transparent;            /* دعم Firefox */
+}
+
+    .navbar-brand i {
+      margin-left: 0.5rem;
+      font-size: 1.8rem;
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: 600;
+      margin: 0 0.5rem;
+      color: var(--dark);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+    }
+
+    .navbar-nav .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      border: none;
+      padding: 0.75rem 1.8rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-outline-primary {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.75rem 1.8rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: var(--transition);
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--gradient-primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background: var(--gradient-dark), 
+                  url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
+      color: var(--white);
+      text-align: center;
+      padding: 12rem 1rem 8rem;
+      margin-top: 76px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .hero-btns {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-title {
+  font-weight: 800;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text; /* Chrome, Edge, Safari */
+  background-clip: text;         /* معيار حديث */
+  -webkit-text-fill-color: transparent;
+  color: transparent;            /* دعم إضافي لـ Firefox */
+}
+
+
+    .section-subtitle {
+      color: var(--secondary);
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+
+    /* Features */
+    .features {
+      background: var(--gradient-light);
+    }
+
+    .feature-box {
+      background: var(--white);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      height: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .feature-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient-primary);
+      z-index: 2;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-light);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      font-size: 2.2rem;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .feature-box:hover .feature-icon {
+      background: var(--gradient-primary);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .feature-box h4 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    /* How it works */
+    .steps-container {
+      position: relative;
+      margin-top: 3rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3rem;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step:hover {
+      transform: translateX(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-number {
+      background: var(--gradient-primary);
+      color: var(--white);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-left: 2rem;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .step-content h4 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    /* Services */
+    .services {
+      background: var(--gradient-light);
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      height: 100%;
+      position: relative;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-img {
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .service-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .service-card:hover .service-img img {
+      transform: scale(1.1);
+    }
+
+    .service-content {
+      padding: 2rem;
+    }
+
+    .service-content h4 {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--dark);
+    }
+
+    /* Branches Section */
+    .branches {
+      background: var(--white);
+    }
+
+    .branch-card {
+      background: var(--white);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      text-align: center;
+      border: 2px solid transparent;
+      height: 100%;
+    }
+
+    .branch-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .branch-icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-light);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .branch-card h4 {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .branch-info {
+      text-align: right;
+      margin-bottom: 1.5rem;
+    }
+
+    .branch-info p {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .branch-info i {
+      margin-left: 0.5rem;
+      color: var(--primary);
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      margin: 1rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .testimonial-card::before {
+      content: "";
+      font-size: 6rem;
+      color: var(--primary);
+      opacity: 0.1;
+      position: absolute;
+      top: -20px;
+      right: 20px;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-text {
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      color: var(--dark);
+      position: relative;
+      z-index: 2;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+
+    .author-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-left: 1.5rem;
+      border: 3px solid var(--primary-light);
+    }
+
+    .author-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h5 {
+      margin-bottom: 0;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .author-info p {
+      margin-bottom: 0;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--gradient-dark);
+      color: var(--white);
+    }
+
+    .contact .section-title {
+  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text; /* Chrome / Safari / Edge */
+  background-clip: text;         /* القياسي */
+  -webkit-text-fill-color: transparent;
+  color: transparent;            /* دعم إضافي لـ Firefox */
+}
+
+
+    .contact .section-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-box:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .contact-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-light);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 4rem 0 1.5rem;
+    }
+
+    .footer-links h5 {
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+      color: var(--accent-light);
+    }
+
+    .footer-links h5::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent-light);
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-light);
+      padding-right: 5px;
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+      margin-top: 3rem;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(180deg);
+      }
+      100% {
+        transform: translateY(0) rotate(360deg);
+      }
+    }
+
+    /* Chatbot Styles */
+    .chatbot-button {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .chatbot-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .chatbot-container {
+      position: fixed;
+      bottom: 110px;
+      left: 25px;
+      width: 380px;
+      max-height: 520px;
+      background: var(--white);
+      border-radius: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1.2rem 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      max-height: 380px;
+    }
+
+    .chat-message {
+      margin-bottom: 1rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      line-height: 1.5;
+      max-width: 85%;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-message.user {
+      background: var(--gradient-primary);
+      color: white;
+      align-self: flex-end;
+      margin-left: auto;
+      border-bottom-right-radius: 5px;
+    }
+
+    .chat-message.bot {
+      background: var(--white);
+      color: var(--dark);
+      align-self: flex-start;
+      margin-right: auto;
+      border-bottom-left-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      border: none;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      background: var(--light);
+      margin-left: 0.5rem;
+    }
+
+    .chat-input button {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 0 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-input button:hover {
+      transform: scale(1.05);
+    }
+
+    .typing {
+      display: inline-block;
+    }
+
+    .typing span {
+      display: inline-block;
+      animation: blink 1.4s infinite both;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 9rem 1rem 5rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      section {
+        padding: 4rem 0;
+      }
+      
+      .step {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .step-number {
+        margin-left: 0;
+        margin-bottom: 1.5rem;
+      }
+      
+      .chatbot-container {
+        width: 320px;
+        left: 15px;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero-btns .btn {
+        width: 100%;
+        max-width: 250px;
+        margin-bottom: 0.5rem;
+      }
+      
+      .branch-info {
+        text-align: center;
+      }
+      
+      .branch-info p {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-heart-pulse-fill"></i>
+        SmartClinic
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#features">المميزات</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how">كيف يعمل</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">خدماتنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#branches">فروعنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonials">آراء العملاء</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">تواصل معنا</a></li>
+        </ul>
+        <div class="d-flex ms-3">
+          <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+          <a href="booking.html" class="btn btn-primary">احجز موعد</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="floating-elements">
+      <div class="floating-element" style="width: 100px; height: 100px; top: 10%; right: 5%;"></div>
+      <div class="floating-element" style="width: 150px; height: 150px; top: 60%; left: 10%;"></div>
+      <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; right: 15%;"></div>
+    </div>
+    
+    <div class="hero-content">
+      <h1>الرعاية الصحية الذكية في متناول يدك</h1>
+      <p>نظام طبي متكامل يمكنك من حجز المواعيد وإجراء التحاليل واستلام النتائج والروشتات الطبية من مكان واحد وبكل سهولة</p>
+      <div class="hero-btns">
+        <a href="booking.html" class="btn btn-light btn-lg">احجز موعدك الآن</a>
+        <a href="#features" class="btn btn-outline-light btn-lg">اكتشف المزيد</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title text-center">مميزات SmartClinic</h2>
+      <p class="section-subtitle text-center">نقدم لك تجربة طبية استثنائية تجمع بين التكنولوجيا الحديثة والرعاية الصحية المتكاملة</p>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-calendar2-check"></i>
+            </div>
+            <h4>إدارة المواعيد بسهولة</h4>
+            <p>نظام حجز ذكي يتيح للمرضى حجز المواعيد ومتابعتها بكل سهولة مع إمكانية تعديلها أو إلغائها.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-file-medical"></i>
+            </div>
+            <h4>نتائج التحاليل والروشتات</h4>
+            <p>استلم نتائج التحاليل والروشتات الطبية مباشرة عبر المنصة دون الحاجة لزيارة العيادة مرة أخرى.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-bar-chart-line"></i>
+            </div>
+            <h4>لوحة تحكم للطبيب</h4>
+            <p>عرض شامل لجميع الحجوزات والمرضى مع إمكانية إدارة المواعيد وكتابة الروشتات وإدخال نتائج التحاليل.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-bell-fill"></i>
+            </div>
+            <h4>تنبيهات وتذكيرات</h4>
+            <p>يتم إرسال إشعارات تلقائية للمرضى لتذكيرهم بمواعيدهم القادمة وإشعارات بنتائج التحاليل الجاهزة.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h4>أمان وحماية البيانات</h4>
+            <p>نظام آمن يحافظ على خصوصية بياناتك الطبية مع تشفير متقدم لجميع المعلومات الحساسة.</p>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="bi bi-phone"></i>
+            </div>
+            <h4>منصة متوافقة مع الجوال</h4>
+            <p>تصميم متجاوب يعمل على جميع الأجهزة يمكنك من إدارة مواعيدك ونتائجك من أي مكان.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section id="how">
+    <div class="container">
+      <h2 class="section-title text-center">كيف يعمل SmartClinic؟</h2>
+      <p class="section-subtitle text-center">خطوات بسيطة لتجربة طبية متكاملة دون عناء</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>تسجيل الدخول</h4>
+            <p>سجل دخولك كـ مريض للوصول إلى جميع خدمات العيادة الذكية.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>حجز الموعد</h4>
+            <p>اختر التخصص الطبي والطبيب المناسب وحدد الموعد المناسب من جدول المواعيد المتاحة بسهولة وسلاسة.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>زيارة العيادة</h4>
+            <p>احضر في الموعد المحدد للكشف الطبي وإجراء التحاليل اللازمة مع الطبيب المختص في بيئة طبية مريحة.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>استلام النتائج والروشتات</h4>
+            <p>استلم نتائج التحاليل والروشتات الطبية مباشرة عبر حسابك على المنصة دون الحاجة لزيارة العيادة مرة أخرى.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="services">
+    <div class="container">
+      <h2 class="section-title text-center">خدماتنا الطبية</h2>
+      <p class="section-subtitle text-center">نوفر مجموعة متنوعة من الخدمات الطبية المتخصصة بأعلى معايير الجودة</p>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=500&q=80" alt="الطب الباطني">
+            </div>
+            <div class="service-content">
+              <h4>الطب الباطني</h4>
+              <p>تشخيص وعلاج الأمراض الداخلية للبالغين مع متابعة الحالات المزمنة بأحدث البروتوكولات الطبية.</p>
+              <a href="booking.html?specialty=internal" class="btn btn-primary mt-3">احجز موعد</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1584467735871-8db9ac8d55b9?auto=format&fit=crop&w=500&q=80" alt="طب الأطفال">
+            </div>
+            <div class="service-content">
+              <h4>طب الأطفال</h4>
+              <p>رعاية طبية شاملة للأطفال من الولادة حتى سن المراهقة مع متابعة النمو والتطعيمات الدورية.</p>
+              <a href="booking.html?specialty=pediatrics" class="btn btn-primary mt-3">احجز موعد</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="service-card">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=500&q=80" alt="المختبر والتحاليل">
+            </div>
+            <div class="service-content">
+              <h4>المختبر والتحاليل</h4>
+              <p>إجراء كافة التحاليل الطبية المخبرية بدقة عالية وتقنيات متطورة مع نتائج سريعة وموثوقة.</p>
+              <a href="booking.html?specialty=lab" class="btn btn-primary mt-3">احجز موعد</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Branches -->
+  <section id="branches" class="branches">
+    <div class="container">
+      <h2 class="section-title text-center">فروع العيادة</h2>
+      <p class="section-subtitle text-center">نقدم خدماتنا في ثلاثة فروع رئيسية لتغطية احتياجاتكم في جميع أنحاء مصر</p>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="branch-card">
+            <div class="branch-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <h4>فرع القاهرة</h4>
+            <div class="branch-info">
+              <p><i class="bi bi-geo-alt"></i> 123 شارع التحرير، الدقي، القاهرة</p>
+              <p><i class="bi bi-telephone"></i> 02 2345 6789</p>
+              <p><i class="bi bi-clock"></i> يومياً من 8 صباحاً حتى 10 مساءً</p>
+            </div>
+            <a href="booking.html?branch=cairo" class="btn btn-primary">احجز في هذا الفرع</a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="branch-card">
+            <div class="branch-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <h4>فرع الإسكندرية</h4>
+            <div class="branch-info">
+              <p><i class="bi bi-geo-alt"></i> 45 شارع سعد زغلول، محطة الرمل، الإسكندرية</p>
+              <p><i class="bi bi-telephone"></i> 03 4567 8901</p>
+              <p><i class="bi bi-clock"></i> يومياً من 8 صباحاً حتى 10 مساءً</p>
+            </div>
+            <a href="booking.html?branch=alexandria" class="btn btn-primary">احجز في هذا الفرع</a>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="branch-card">
+            <div class="branch-icon">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <h4>فرع المنصورة</h4>
+            <div class="branch-info">
+              <p><i class="bi bi-geo-alt"></i> 78 شارع الجمهورية، حي الجامعة، المنصورة</p>
+              <p><i class="bi bi-telephone"></i> 050 2345 678</p>
+              <p><i class="bi bi-clock"></i> يومياً من 8 صباحاً حتى 10 مساءً</p>
+            </div>
+            <a href="booking.html?branch=mansoura" class="btn btn-primary">احجز في هذا الفرع</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title text-center">آراء عملائنا</h2>
+      <p class="section-subtitle text-center">ما يقوله مرضانا عن تجربتهم مع SmartClinic</p>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="testimonial-card">
+            <div class="testimonial-text">
+              "تجربة رائعة! استطعت حجز موعد بسهولة والحصول على نتائج التحاليل عبر الموقع دون الحاجة للعودة إلى العيادة. وفرت علي الكثير من الوقت والجهد. الخدمة سريعة والنتائج دقيقة."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-img">
+                <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="أميرة محمد">
+              </div>
+              <div class="author-info">
+                <h5>أميرة محمد</h5>
+                <p>مريضة - فرع القاهرة</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="testimonial-card">
+            <div class="testimonial-text">
+              "كمريض سكر، أحتاج لمتابعة منتظمة. SmartClinic سهلت علي متابعة حالتي واستلام الروشتات والتحاليل بانتظام دون الحاجة لزيارات متكررة للعيادة. النظام سهل الاستخدام والنتائج تصل بسرعة."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-img">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="أحمد السيد">
+              </div>
+              <div class="author-info">
+                <h5>أحمد السيد</h5>
+                <p>مريض - فرع الإسكندرية</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title text-center">تواصل معنا</h2>
+      <p class="section-subtitle text-center">نحن هنا لمساعدتك في أي استفسار طبي أو فني على مدار الساعة</p>
+      
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="row text-center">
+            <div class="col-md-4 mb-4">
+              <div class="contact-box">
+                <div class="contact-icon">
+                  <i class="bi bi-telephone"></i>
+                </div>
+                <h4>اتصل بنا</h4>
+                <p>0100 123 4567</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="contact-box">
+                <div class="contact-icon">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <h4>البريد الإلكتروني</h4>
+                <p>support@smartclinic.com</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="contact-box">
+                <div class="contact-icon">
+                  <i class="bi bi-geo-alt"></i>
+                </div>
+                <h4>العنوان</h4>
+                <p>القاهرة، الإسكندرية، المنصورة</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-5">
+            <h4>ساعات العمل</h4>
+            <p>من السبت إلى الخميس: 8 صباحًا - 10 مساءً</p>
+            <p>الجمعة: 10 صباحًا - 6 مساءً</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="footer-links">
+            <h5>عن SmartClinic</h5>
+            <p>نظام طبي ذكي متكامل يهدف إلى تبسيط العملية الطبية وتوفير تجربة مريحة وشاملة للمرضى من خلال التكنولوجيا الحديثة والتصميم المتقن.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 mb-4">
+          <div class="footer-links">
+            <h5>روابط سريعة</h5>
+            <ul>
+              <li><a href="#features">المميزات</a></li>
+              <li><a href="#how">كيف يعمل</a></li>
+              <li><a href="#services">خدماتنا</a></li>
+              <li><a href="#branches">فروعنا</a></li>
+              <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-links">
+            <h5>خدمات المرضى</h5>
+            <ul>
+              <li><a href="login.html">تسجيل الدخول</a></li>
+              <li><a href="booking.html">حجز موعد</a></li>
+              <li><a href="#services">الخدمات الطبية</a></li>
+              <li><a href="#branches">فروع العيادة</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-links">
+            <h5>خدمات الأطباء</h5>
+            <ul>
+              <li><a href="login.html">تسجيل دخول الطبيب</a></li>
+              <li><a href="#contact">الدعم الفني</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2025 SmartClinic — جميع الحقوق محفوظة</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot -->
+  <button class="chatbot-button" id="chatbotButton">
+    <i class="bi bi-chat-dots"></i>
+  </button>
+
+  <div class="chatbot-container" id="chatbotContainer">
+    <div class="chat-header">
+      <span>MedAssistant – المساعد الطبي الذكي</span>
+      <div>
+        <button id="clearChat" style="background:none;border:none;color:white;font-size:16px;margin-right:10px;"><i class="bi bi-trash"></i></button>
+        <button id="closeChat" style="background:none;border:none;color:white;font-size:20px;">×</button>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot">مرحبًا 👋 أنا <b>MedAssistant</b>، مساعدك الطبي الذكي. كيف يمكنني مساعدتك اليوم؟</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="اكتب سؤالك الطبي هنا..." />
+      <button id="sendMessage"><i class="bi bi-send"></i></button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // التحقق من تسجيل الدخول للمريض
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (!currentUser || currentUser.type !== 'patient') {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // استمرار في تحميل الصفحة...
+      
+      // Navbar scroll effect
+      window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Create floating elements
+      function createFloatingElements() {
+        const container = document.querySelector('.floating-elements');
+        for (let i = 0; i < 8; i++) {
+          const element = document.createElement('div');
+          element.classList.add('floating-element');
+          
+          const size = Math.random() * 100 + 50;
+          const top = Math.random() * 100;
+          const left = Math.random() * 100;
+          const delay = Math.random() * 15;
+          
+          element.style.width = `${size}px`;
+          element.style.height = `${size}px`;
+          element.style.top = `${top}%`;
+          element.style.left = `${left}%`;
+          element.style.animationDelay = `${delay}s`;
+          element.style.opacity = Math.random() * 0.3 + 0.1;
+          
+          container.appendChild(element);
+        }
+      }
+
+      // Initialize floating elements
+      createFloatingElements();
+
+      // Chatbot functionality
+      const chatbotButton = document.getElementById("chatbotButton");
+      const chatbotContainer = document.getElementById("chatbotContainer");
+      const closeChat = document.getElementById("closeChat");
+      const clearChat = document.getElementById("clearChat");
+      const chatBody = document.getElementById("chatBody");
+      const sendMessage = document.getElementById("sendMessage");
+      const userInput = document.getElementById("userInput");
+
+      chatbotButton.addEventListener("click", () => {
+        chatbotContainer.style.display = "flex";
+      });
+
+      closeChat.addEventListener("click", () => {
+        chatbotContainer.style.display = "none";
+      });
+
+      clearChat.addEventListener("click", () => {
+        chatBody.innerHTML = '<div class="chat-message bot">مرحبًا 👋 أنا <b>MedAssistant</b>، مساعدك الطبي الذكي. كيف يمكنني مساعدتك اليوم؟</div>';
+      });
+
+      sendMessage.addEventListener("click", sendChat);
+      userInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") sendChat();
+      });
+
+      function sendChat() {
+        const userText = userInput.value.trim();
+        if (userText === "") return;
+        appendMessage(userText, "user");
+        userInput.value = "";
+
+        setTimeout(() => showTyping(() => {
+          const botReply = getBotResponse(userText);
+          appendMessage(botReply, "bot");
+        }), 600);
+      }
+
+      function appendMessage(text, sender) {
+        const msg = document.createElement("div");
+        msg.classList.add("chat-message", sender);
+        msg.textContent = text;
+        chatBody.appendChild(msg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      function showTyping(callback) {
+        const typingDiv = document.createElement("div");
+        typingDiv.classList.add("chat-message", "bot", "typing");
+        typingDiv.innerHTML = "<span>.</span><span>.</span><span>.</span>";
+        chatBody.appendChild(typingDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        setTimeout(() => {
+          typingDiv.remove();
+          callback();
+        }, 1200);
+      }
+
+      // Enhanced responses with branches info
+      function getBotResponse(input) {
+        input = input.toLowerCase();
+        
+        if (input.includes("موعد") || input.includes("حجز")) {
+          return "يمكنك حجز موعد من خلال الضغط على زر 'احجز موعدك الآن' في الصفحة الرئيسية أو من خلال حسابك الشخصي. يمكنك اختيار الفرع المناسب لك من بين فروعنا الثلاثة (القاهرة، الإسكندرية، المنصورة).";
+        }
+        
+        if (input.includes("نتائج") || input.includes("تحاليل")) {
+          return "لرؤية نتائج التحاليل، سجل الدخول إلى حسابك وانتقل إلى قسم 'نتائج التحاليل'. النتائج تظهر عادة خلال 24-48 ساعة من إجراء التحاليل في أي فرع من فروعنا.";
+        }
+        
+        if (input.includes("روشتة") || input.includes("دواء")) {
+          return "الروشتات الطبية تظهر في حسابك بعد زيارة الطبيب. يمكنك عرضها وتحميلها من قسم 'الروشتات' في حسابك الشخصي من أي فرع تزوره.";
+        }
+        
+        if (input.includes("طبيب") || input.includes("دكتور")) {
+          return "لدينا أطباء متخصصون في مختلف المجالات في جميع فروعنا. يمكنك اختيار التخصص والطبيب المناسب عند حجز الموعد. جميع أطبائنا معتمدون وذوو خبرة.";
+        }
+        
+        if (input.includes("سعر") || input.includes("تكلفة") || input.includes("ثمن")) {
+          return "تختلف تكلفة الخدمات حسب نوع الكشف والتحاليل المطلوبة. يمكنك رؤية الأسعار عند حجز الموعد أو التواصل معنا على الرقم 0100 123 4567 لمزيد من التفاصيل. الأسعار موحدة في جميع الفروع.";
+        }
+        
+        if (input.includes("تأمين") || input.includes("بيمه")) {
+          return "نقبل العديد من شركات التأمين الصحي في جميع فروعنا. يمكنك إدخال بيانات التأمين في حسابك أو الاتصال بنا للاستفسار عن شركات التأمين المتعاقد معها.";
+        }
+        
+        if (input.includes("حساب") || input.includes("تسجيل")) {
+          return "لإنشاء حساب جديد، اضغط على زر 'إنشاء حساب جديد' في الصفحة الرئيسية واملأ البيانات المطلوبة. ستحتاج إلى بريد إلكتروني ورقم هاتف للتحقق. يمكنك استخدام حساب واحد لجميع فروعنا.";
+        }
+        
+        if (input.includes("فرع") || input.includes("فروع")) {
+          return "لدينا ثلاثة فروع رئيسية: القاهرة (شارع التحرير، الدقي)، الإسكندرية (شارع سعد زغلول، محطة الرمل)، والمنصورة (شارع الجمهورية، حي الجامعة). جميع الفروع تقدم نفس الخدمات بنفس الجودة.";
+        }
+        
+        if (input.includes("القاهرة")) {
+          return "فرع القاهرة: 123 شارع التحرير، الدقي، القاهرة - هاتف: 02 2345 6789 - ساعات العمل: يومياً من 8 صباحاً حتى 10 مساءً.";
+        }
+        
+        if (input.includes("الإسكندرية") || input.includes("اسكندرية")) {
+          return "فرع الإسكندرية: 45 شارع سعد زغلول، محطة الرمل، الإسكندرية - هاتف: 03 4567 8901 - ساعات العمل: يومياً من 8 صباحاً حتى 10 مساءً.";
+        }
+        
+        if (input.includes("المنصورة") || input.includes("منصورة")) {
+          return "فرع المنصورة: 78 شارع الجمهورية، حي الجامعة، المنصورة - هاتف: 050 2345 678 - ساعات العمل: يومياً من 8 صباحاً حتى 10 مساءً.";
+        }
+        
+        if (input.includes("صداع")) {
+          return "الصداع يمكن أن ينتج عن التوتر أو قلة النوم أو ضعف النظر. حاول الراحة، وتناول السوائل، وإذا استمر استشر طبيبًا. يمكنك حجز موعد مع طبيب باطني من خلال الموقع في أي فرع قريب منك.";
+        }
+        
+        if (input.includes("سكر") || input.includes("diabetes")) {
+          return "لمرضى السكر يُنصح بقياس الجلوكوز بانتظام، وتناول وجبات متوازنة، وتجنب السكريات البسيطة. يمكنك حجز موعد مع أخصائي الغدد الصماء للمتابعة المنتظمة في أي فرع من فروعنا.";
+        }
+        
+        if (input.includes("ضغط")) {
+          return "ارتفاع ضغط الدم يحتاج لمتابعة منتظمة، قلل الملح وابتعد عن القلق الزائد. يمكنك حجز موعد مع طبيب باطني للمتابعة وإجراء التحاليل اللازمة في الفرع الأقرب إليك.";
+        }
+        
+        return "شكرًا لسؤالك 💬، للأسف لا أملك المعلومات الكافية للإجابة بدقة. يمكنك التواصل معنا على الرقم 0100 123 4567 أو حجز موعد مع طبيب متخصص في أي فرع من فروعنا للحصول على تشخيص دقيق 🩺.";
+      }
+    });
+  </script>
+</body>
+</html>

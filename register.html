@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartClinic — إنشاء حساب جديد</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #64748b;
+      --accent: #06b6d4;
+      --accent-light: #22d3ee;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --white: #ffffff;
+      --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+      --gradient-light: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      --gradient-dark: linear-gradient(135deg, #1e3a8a 0%, #0e7490 100%);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--gradient-light);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .register-card {
+      background: var(--white);
+      border-radius: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .register-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .register-header {
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .register-header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .register-header i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .register-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .register-body {
+      padding: 2.5rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-label i {
+      margin-left: 0.5rem;
+      color: var(--primary);
+    }
+
+    .form-control, .form-select {
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      border: none;
+      padding: 0.75rem 1.8rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .alert {
+      border-radius: 0.75rem;
+      border: none;
+      padding: 1rem 1.5rem;
+    }
+
+    .register-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .register-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .register-footer a:hover {
+      color: var(--primary-dark);
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .password-strength {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .strength-weak { color: var(--danger); }
+    .strength-medium { color: var(--warning); }
+    .strength-strong { color: var(--success); }
+
+    .progress {
+      height: 6px;
+      margin-top: 0.5rem;
+    }
+
+    .form-check {
+      margin: 1rem 0;
+    }
+
+    .form-check-input {
+      margin-left: 0.5rem;
+    }
+
+    .form-check-label {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="register-container">
+    <div class="register-card">
+      <div class="register-header">
+        <div class="register-header-content">
+          <i class="bi bi-person-plus"></i>
+          <h1>إنشاء حساب جديد</h1>
+          <p>انضم إلى عائلة SmartClinic الطبية</p>
+        </div>
+      </div>
+
+      <div class="register-body">
+        <form id="registerForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-person"></i>
+                الاسم الأول
+              </label>
+              <input type="text" class="form-control" id="firstName" placeholder="الاسم الأول" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-person"></i>
+                الاسم الأخير
+              </label>
+              <input type="text" class="form-control" id="lastName" placeholder="الاسم الأخير" required>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">
+                <i class="bi bi-envelope"></i>
+                البريد الإلكتروني
+              </label>
+              <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+              <div class="form-text">سيتم استخدام هذا البريد لتسجيل الدخول</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-phone"></i>
+                رقم الهاتف
+              </label>
+              <input type="tel" class="form-control" id="phone" placeholder="01234567890" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-calendar"></i>
+                تاريخ الميلاد
+              </label>
+              <input type="date" class="form-control" id="birthDate" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-gender-ambiguous"></i>
+                الجنس
+              </label>
+              <select class="form-select" id="gender" required>
+                <option value="">اختر الجنس...</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                <i class="bi bi-geo-alt"></i>
+                المحافظة
+              </label>
+              <select class="form-select" id="governorate" required>
+                <option value="">اختر المحافظة...</option>
+                <option value="القاهرة">القاهرة</option>
+                <option value="الإسكندرية">الإسكندرية</option>
+                <option value="المنصورة">المنصورة</option>
+                <option value="الجيزة">الجيزة</option>
+                <option value="الإسماعيلية">الإسماعيلية</option>
+                <option value="بورسعيد">بورسعيد</option>
+                <option value="السويس">السويس</option>
+                <option value="دمياط">دمياط</option>
+                <option value="الشرقية">الشرقية</option>
+                <option value="الغربية">الغربية</option>
+                <option value="المنوفية">المنوفية</option>
+                <option value="القليوبية">القليوبية</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">
+                <i class="bi bi-lock"></i>
+                كلمة المرور
+              </label>
+              <input type="password" class="form-control" id="password" placeholder="كلمة المرور" required>
+              <div class="password-strength" id="passwordStrength"></div>
+              <div class="progress">
+                <div class="progress-bar" id="passwordStrengthBar" role="progressbar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">
+                <i class="bi bi-lock"></i>
+                تأكيد كلمة المرور
+              </label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+            </div>
+
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label" for="terms">
+                  أوافق على <a href="#" class="text-primary">شروط الاستخدام</a> و <a href="#" class="text-primary">سياسة الخصوصية</a>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-4" id="registerBtn">
+            <i class="bi bi-person-plus"></i> إنشاء الحساب
+          </button>
+
+          <div class="alert alert-success d-none" id="successAlert">
+            <i class="bi bi-check-circle"></i> 
+            <span id="successMessage"></span>
+          </div>
+
+          <div class="alert alert-danger d-none" id="errorAlert">
+            <i class="bi bi-exclamation-triangle"></i> 
+            <span id="errorMessage"></span>
+          </div>
+        </form>
+
+        <div class="register-footer">
+          <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+          <p><a href="index.html"><i class="bi bi-house-door"></i> العودة للصفحة الرئيسية</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // قاعدة بيانات المرضى (سيتم تخزينها في localStorage)
+    let patientsDatabase = JSON.parse(localStorage.getItem('patientsDatabase')) || [];
+
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      // تعيين الحد الأقصى للتاريخ (اليوم) للتاريخ الميلادي
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('birthDate').max = today;
+
+      // متابعة قوة كلمة المرور
+      document.getElementById('password').addEventListener('input', checkPasswordStrength);
+    });
+
+    // التحقق من قوة كلمة المرور
+    function checkPasswordStrength() {
+      const password = document.getElementById('password').value;
+      const strengthElement = document.getElementById('passwordStrength');
+      const strengthBar = document.getElementById('passwordStrengthBar');
+      
+      if (password.length === 0) {
+        strengthElement.textContent = '';
+        strengthBar.style.width = '0%';
+        strengthBar.className = 'progress-bar';
+        return;
+      }
+
+      let strength = 0;
+      let feedback = '';
+
+      // التحقق من الطول
+      if (password.length >= 8) strength++;
+      else feedback = 'كلمة المرور ضعيفة - يجب أن تكون 8 أحرف على الأقل';
+
+      // التحقق من وجود أرقام
+      if (/\d/.test(password)) strength++;
+      else feedback = 'كلمة المرور ضعيفة - يجب أن تحتوي على أرقام';
+
+      // التحقق من وجود أحرف كبيرة وصغيرة
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      else feedback = 'كلمة المرور متوسطة - جرب إضافة أحرف كبيرة وصغيرة';
+
+      // التحقق من وجود رموز خاصة
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+      else if (strength >= 2) feedback = 'كلمة المرور جيدة - يمكن جعلها أقوى بإضافة رموز خاصة';
+
+      // تحديث شريط التقدم
+      const width = (strength / 4) * 100;
+      strengthBar.style.width = `${width}%`;
+
+      // عرض النتيجة
+      if (strength === 4) {
+        strengthElement.textContent = 'كلمة المرور قوية ✓';
+        strengthElement.className = 'password-strength strength-strong';
+        strengthBar.className = 'progress-bar bg-success';
+      } else if (strength >= 2) {
+        strengthElement.textContent = feedback || 'كلمة المرور متوسطة';
+        strengthElement.className = 'password-strength strength-medium';
+        strengthBar.className = 'progress-bar bg-warning';
+      } else {
+        strengthElement.textContent = feedback || 'كلمة المرور ضعيفة';
+        strengthElement.className = 'password-strength strength-weak';
+        strengthBar.className = 'progress-bar bg-danger';
+      }
+    }
+
+    // معالجة التسجيل
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // جمع البيانات من النموذج
+      const formData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim().toLowerCase(),
+        phone: document.getElementById('phone').value.trim(),
+        birthDate: document.getElementById('birthDate').value,
+        gender: document.getElementById('gender').value,
+        governorate: document.getElementById('governorate').value,
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value,
+        terms: document.getElementById('terms').checked
+      };
+
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const successAlert = document.getElementById('successAlert');
+      const successMessage = document.getElementById('successMessage');
+      const registerBtn = document.getElementById('registerBtn');
+
+      // إخفاء الرسائل
+      errorAlert.classList.add('d-none');
+      successAlert.classList.add('d-none');
+
+      // التحقق من صحة البيانات
+      const validation = validateFormData(formData);
+      if (!validation.isValid) {
+        showError(validation.message);
+        return;
+      }
+
+      // التحقق من عدم وجود مريض مسجل بنفس البريد
+      const existingPatient = patientsDatabase.find(patient => 
+        patient.email === formData.email
+      );
+
+      if (existingPatient) {
+        showError('هناك مريض مسجل بالفعل بنفس البريد الإلكتروني');
+        return;
+      }
+
+      // إنشاء بيانات المريض الجديد
+      const newPatient = {
+        id: Date.now(), // استخدام timestamp كمعرف فريد
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        governorate: formData.governorate,
+        registrationDate: new Date().toISOString(),
+        status: "active",
+        type: "patient"
+      };
+
+      // محاكاة عملية التسجيل
+      registerBtn.disabled = true;
+      registerBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> جاري إنشاء الحساب...';
+
+      setTimeout(() => {
+        // إضافة المريض الجديد إلى قاعدة البيانات
+        patientsDatabase.push(newPatient);
+        
+        // حفظ في localStorage
+        localStorage.setItem('patientsDatabase', JSON.stringify(patientsDatabase));
+
+        // تسجيل الدخول تلقائياً
+        localStorage.setItem('currentUser', JSON.stringify(newPatient));
+
+        // عرض رسالة النجاح
+        showSuccess(`تم إنشاء حسابك بنجاح! مرحباً بك ${newPatient.name}`);
+
+        // تمكين زر التسجيل
+        registerBtn.disabled = false;
+        registerBtn.innerHTML = '<i class="bi bi-person-plus"></i> إنشاء الحساب';
+
+        // توجيه إلى الصفحة الرئيسية بعد 3 ثوان
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 3000);
+      }, 2000);
+    });
+
+    // التحقق من صحة البيانات
+    function validateFormData(data) {
+      // التحقق من الحقول المطلوبة
+      const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'birthDate', 'gender', 'governorate', 'password', 'confirmPassword'];
+      for (let field of requiredFields) {
+        if (!data[field]) {
+          return { isValid: false, message: 'يرجى ملء جميع الحقول المطلوبة' };
+        }
+      }
+
+      // التحقق من شروط الاستخدام
+      if (!data.terms) {
+        return { isValid: false, message: 'يجب الموافقة على شروط الاستخدام وسياسة الخصوصية' };
+      }
+
+      // التحقق من صحة البريد الإلكتروني
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        return { isValid: false, message: 'يرجى إدخال بريد إلكتروني صحيح' };
+      }
+
+      // التحقق من صحة رقم الهاتف
+      const phoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
+      if (!phoneRegex.test(data.phone)) {
+        return { isValid: false, message: 'يرجى إدخال رقم هاتف مصري صحيح' };
+      }
+
+      // التحقق من تاريخ الميلاد
+      const birthDate = new Date(data.birthDate);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      
+      if (age < 1) {
+        return { isValid: false, message: 'يجب أن يكون عمرك أكثر من سنة واحدة' };
+      }
+
+      if (age > 120) {
+        return { isValid: false, message: 'يرجى التحقق من تاريخ الميلاد' };
+      }
+
+      // التحقق من تطابق كلمات المرور
+      if (data.password !== data.confirmPassword) {
+        return { isValid: false, message: 'كلمات المرور غير متطابقة' };
+      }
+
+      // التحقق من قوة كلمة المرور
+      if (data.password.length < 6) {
+        return { isValid: false, message: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' };
+      }
+
+      return { isValid: true, message: '' };
+    }
+
+    // عرض رسالة الخطأ
+    function showError(message) {
+      const errorAlert = document.getElementById('errorAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      errorMessage.textContent = message;
+      errorAlert.classList.remove('d-none');
+      
+      // تمرير إلى أعلى لرؤية الرسالة
+      errorAlert.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // عرض رسالة النجاح
+    function showSuccess(message) {
+      const successAlert = document.getElementById('successAlert');
+      const successMessage = document.getElementById('successMessage');
+      
+      successMessage.textContent = message;
+      successAlert.classList.remove('d-none');
+      
+      // تمرير إلى أعلى لرؤية الرسالة
+      successAlert.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
